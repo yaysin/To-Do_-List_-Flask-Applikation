@@ -1,21 +1,21 @@
 [
     {
         "id": 1,
-        "description": "B\u00e4dda din s\u00e4ng.",
+        "description": "B\u00e4dda din s\u00e4ng",
         "category": "DAGLIG RUTINER",
         "status": "completed"
     },
     {
         "id": 2,
-        "description": "\u00c4ta frukost.",
+        "description": "\u00c4ta frukost",
         "category": "DAGLIG RUTINER",
         "status": "completed"
     },
     {
         "id": 3,
-        "description": "Borsta t\u00e4nderna.",
+        "description": "Borsta t\u00e4nderna",
         "category": "DAGLIG RUTINER",
-        "status": "pending"
+        "status": "completed"
     },
     {
         "id": 4,
@@ -31,12 +31,6 @@
     },
     {
         "id": 6,
-        "description": "L\u00f6sa 100 AWS Solution Architect \u00d6vningar",
-        "category": "UTBILDNING",
-        "status": "pending"
-    },
-    {
-        "id": 7,
         "description": "L\u00f6sa 100 AWS Solution Architect \u00d6vningar",
         "category": "UTBILDNING",
         "status": "pending"
