@@ -5,59 +5,96 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To-Do List</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
         .completed {
             text-decoration: line-through;
             color: grey;
         }
         .error-message {
             color: red;
+            text-align: center;
+        }
+        form {
+            display: inline;
+        }
+        .form-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .form-container form {
+            display: inline-block;
+            text-align: left;
+        }
+        .delete-form {
+            margin-top: 5px;
+        }
+        .delete-form input {
+            margin-right: 5px;
         }
     </style>
 </head>
 <body>
     <h1>Att Göra Listan</h1>
 
-        <ul>
+    <ul>
         {% for task in tasks %}
             <li>
                 <span class="{% if task.status == 'completed' %}completed{% endif %}">
                     <strong>{{ task.description }}</strong> - Kategori: {{ task.category }}
                 </span>
-                
-                
-                <form action="{{ url_for('complete_task', task_id=task.id) }}" method="post" style="display:inline;">
-                    <button type="submit">Markera som slutförd</button>
-                </form>
-                
-                
-                <form action="{{ url_for('delete_task', task_id=task.id) }}" method="post" style="display:inline;">
-                    <button type="button" onclick="document.getElementById('deleteForm{{ task.id }}').style.display='block'">Ta bort uppgift (ange lösenord)</button>
-                </form>
-
-                
-                <div id="deleteForm{{ task.id }}" style="display:none;">
-                    <form action="{{ url_for('delete_task', task_id=task.id) }}" method="POST">
-                        <label for="password">Lösenord:</label><br>
-                        <input type="password" id="password" name="password" required><br>
-                        <button type="submit">Ta bort uppgift</button>
-                    </form>
-                    {% if error_message %}
-                        <p class="error-message">{{ error_message }}</p>
+                <div>
+                    {% if task.status != 'completed' %}
+                        <form action="{{ url_for('complete_task', task_id=task.id) }}" method="post">
+                            <button type="submit">Markera som slutförd</button>
+                        </form>
                     {% endif %}
+                    <button type="button" onclick="document.getElementById('deleteForm{{ task.id }}').style.display='block'">
+                        Ta bort uppgift
+                    </button>
+                </div>
+                <div id="deleteForm{{ task.id }}" class="delete-form" style="display:none;">
+                    <form action="{{ url_for('delete_task', task_id=task.id) }}" method="POST">
+                        <input type="password" name="password" placeholder="Ange lösenord" required>
+                        <button type="submit">Bekräfta</button>
+                    </form>
                 </div>
             </li>
         {% endfor %}
     </ul>
 
+    {% if error_message %}
+        <p class="error-message">{{ error_message }}</p>
+    {% endif %}
+
+    <div class="form-container">
         <h2>Lägg till ny uppgift</h2>
-    <form action="/" method="post">
-        <label for="description">Beskrivning:</label><br>
-        <input type="text" id="description" name="description" required><br>
-        
-        <label for="category">Kategori:</label><br>
-        <input type="text" id="category" name="category" required><br>
-        
-        <button type="submit">Lägg till uppgift</button>
-    </form>
+        <form action="/" method="post">
+            <label for="description">Beskrivning:</label><br>
+            <input type="text" id="description" name="description" required><br><br>
+            <label for="category">Kategori:</label><br>
+            <input type="text" id="category" name="category" required><br><br>
+            <button type="submit">Lägg till uppgift</button>
+        </form>
+    </div>
 </body>
 </html>
